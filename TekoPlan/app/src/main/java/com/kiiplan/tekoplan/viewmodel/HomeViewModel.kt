@@ -3,9 +3,9 @@ package com.kiiplan.tekoplan.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.tekoplan.data.database.AppDatabase
-import com.tekoplan.data.database.Trip
-import com.tekoplan.utils.DateUtils
+import com.kiiplan.tekoplan.data.database.AppDatabase
+import com.kiiplan.tekoplan.data.database.Trip
+import com.kiiplan.tekoplan.utils.DateUtils
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.util.*

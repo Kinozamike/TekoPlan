@@ -1,56 +1,55 @@
 package com.kiiplan.tekoplan.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.Alignment
+import androidx.navigation.NavController
+import com.kiiplan.tekoplan.viewmodel.HomeViewModel
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    viewModel: HomeViewModel,
+    navController: NavController,
+    onTripConfirmed: () -> Unit,
     onStartPointValidated: () -> Unit,
-    onEndPointValidated: () -> Unit,
-    onTripConfirmed: (Double) -> Unit,
-    totalToday: Double
+    onEndPointValidated: () -> Unit
 ) {
-    var tripCost by remember { mutableStateOf(TextFieldValue("")) }
-
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Nouvelle course", style = MaterialTheme.typography.h6)
-
-        Button(onClick = onStartPointValidated) {
-            Text("Valider le point de départ")
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Accueil") }
+            )
         }
-
-        Button(onClick = onEndPointValidated) {
-            Text("Valider le point d'arrivée")
-        }
-
-        OutlinedTextField(
-            value = tripCost,
-            onValueChange = { tripCost = it },
-            label = { Text("Coût de la course (€)") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Button(
-            onClick = {
-                tripCost.text.toDoubleOrNull()?.let(onTripConfirmed)
-                tripCost = TextFieldValue("")
-            },
-            enabled = tripCost.text.toDoubleOrNull() != null
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .padding(16.dp)
+                .fillMaxSize()
         ) {
-            Text("Valider la course")
+            Text("Bienvenue sur l'écran d'accueil", style = MaterialTheme.typography.titleLarge)
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = { onStartPointValidated() }, modifier = Modifier.fillMaxWidth()) {
+                Text("Valider le point de départ")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(onClick = { onEndPointValidated() }, modifier = Modifier.fillMaxWidth()) {
+                Text("Valider le point d'arrivée")
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(onClick = { onTripConfirmed() }, modifier = Modifier.fillMaxWidth()) {
+                Text("Confirmer la course")
+            }
         }
-
-        Spacer(Modifier.height(32.dp))
-
-        Text("Total aujourd'hui : ${"%.2f".format(totalToday)} €")
     }
 }

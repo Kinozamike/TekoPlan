@@ -1,15 +1,16 @@
 package com.kiiplan.tekoplan.ui.screens
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tekoplan.data.database.Trip
-import com.tekoplan.viewmodel.HomeViewModel
+import androidx.navigation.NavHostController
+import com.kiiplan.tekoplan.data.database.Trip
+import com.kiiplan.tekoplan.viewmodel.HomeViewModel
 
 @Composable
-fun StatsScreen(viewModel: HomeViewModel) {
+fun StatsScreen(viewModel: HomeViewModel, navController: NavHostController) {
     var selected by remember { mutableStateOf("month") }
     var stats by remember { mutableStateOf<List<Trip>>(emptyList()) }
 
@@ -20,7 +21,7 @@ fun StatsScreen(viewModel: HomeViewModel) {
     }
 
     Column(modifier = Modifier.padding(16.dp)) {
-        Text("Bilan ${selected}", style = MaterialTheme.typography.h6)
+        Text("Bilan ${selected}", style = MaterialTheme.typography.titleLarge)
 
         Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = Modifier.fillMaxWidth()) {
             Button(onClick = { selected = "month" }) { Text("Mois") }

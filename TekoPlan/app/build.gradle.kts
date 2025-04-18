@@ -1,6 +1,6 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlinAndroid)
     id("kotlin-kapt")
 }
 
@@ -14,6 +14,11 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -31,40 +36,44 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "1.8"
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
     }
 }
 
 dependencies {
-    // Jetpack Compose
-    implementation("androidx.compose.ui:ui:1.6.4")
-    implementation("androidx.compose.material:material:1.6.4")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.6.4")
-    implementation("androidx.navigation:navigation-compose:2.7.7")
-
-    // Lifecycle + ViewModel
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation(libs.core.ktx)
+    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.activity.compose)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 
-    // Google Play Billing
-    implementation("com.android.billingclient:billing-ktx:6.1.0")
+    // Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
 
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
 
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-
-    // Debugging
-    debugImplementation("androidx.compose.ui:ui-tooling:1.6.4")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.4")
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    debugImplementation(libs.ui.tooling)
 }

@@ -3,18 +3,21 @@ package com.kiiplan.tekoplan.ui.screens
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.tekoplan.data.database.Trip
+import com.kiiplan.tekoplan.data.database.Trip
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
 fun HistoryScreen(trips: List<Trip>) {
     Column(modifier = Modifier.padding(16.dp)) {
-        Text("Historique des courses", style = MaterialTheme.typography.h6)
+        Text(
+            text = "Historique des courses",
+            style = MaterialTheme.typography.titleLarge
+        )
 
         LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(trips) { trip -> TripItem(trip) }
@@ -31,8 +34,9 @@ fun TripItem(trip: Trip) {
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = 4.dp
-    ) {
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+    )
+    {
         Column(Modifier.padding(12.dp)) {
             Text("Date : $date")
             Text("Départ : ${trip.startLat}, ${trip.startLon}")

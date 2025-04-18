@@ -2,8 +2,8 @@ package com.kiiplan.tekoplan.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +21,7 @@ fun BarChart(data: Map<String, Double>, goal: Double) {
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         data.forEach { (day, value) ->
-            val heightRatio = (value / max).coerceIn(0f, 1f)
+            val heightRatio = (value / max).coerceIn(0.0, 1.0)
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Box(
                     modifier = Modifier
@@ -30,7 +30,7 @@ fun BarChart(data: Map<String, Double>, goal: Double) {
                         .background(if (value >= goal) Color(0xFF4CAF50) else Color(0xFF1976D2))
                 )
                 Spacer(Modifier.height(4.dp))
-                Text(day, style = MaterialTheme.typography.caption)
+                Text(day, style = MaterialTheme.typography.labelSmall)
             }
         }
     }

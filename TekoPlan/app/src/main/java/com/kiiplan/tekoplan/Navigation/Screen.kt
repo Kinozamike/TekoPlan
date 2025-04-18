@@ -1,4 +1,4 @@
-package com.tekoplan.navigation
+package com.kiiplan.tekoplan.navigation
 
 // Liste des routes de navigation dans l'application
 sealed class Screen(val route: String) {
